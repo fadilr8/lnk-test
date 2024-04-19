@@ -1,0 +1,31 @@
+.wrapper {
+  width: 420px;
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(30px);
+  color: white;
+  border-radius: 10px;
+  padding: 30px 40px;
+}
+
+.wrapper h1 {
+  font-size: 36px;
+  text-align: center;
+}
+
+/* styles.css (or any other CSS file you're using) */
+.email-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.email-table th,
+.email-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.email-table tr:hover {
+  background-color: #333;
+}

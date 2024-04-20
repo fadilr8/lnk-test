@@ -8,7 +8,7 @@ function App() {
 
   useEffect(() => {
     const sessionExists = sessionStorage.getItem('isLoggedIn') === 'true';
-    console.log(sessionExists);
+
     setIsLoggedIn(sessionExists);
     setLoading(false);
   }, []);

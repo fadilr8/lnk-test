@@ -8,10 +8,39 @@ const CreateModal = ({ isOpen, onClose, onCreateUser }) => {
   const [subsDate, setSubsDate] = useState('');
   const [description, setDescription] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onCreateUser({ name, email, subsDate, description });
-    onClose(); // Close the modal
+    const formData = {
+      name,
+      email,
+      subs_date: subsDate,
+      description,
+    };
+
+    try {
+      const response = await fetch('http://localhost:3001/api/subscribers', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+        credentials: 'include',
+      });
+      if (response.ok) {
+        onCreateUser({ email });
+
+        setName('');
+        setEmail('');
+        setSubsDate('');
+        setDescription('');
+
+        onClose();
+      } else {
+        console.error('Failed to create user');
+      }
+    } catch (error) {
+      console.error('Error creating user:', error);
+    }
   };
 
   if (!isOpen) {
@@ -20,25 +49,57 @@ const CreateModal = ({ isOpen, onClose, onCreateUser }) => {
 
   return (
     <div className="modal">
-      <div className="modal-content">
-        <span className="close" onClick={onClose}>&times;</span>
-        <h2>Create New User</h2>
+      <div className="modal-content wrapper">
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <div style={{ flexGrow: 1, marginBottom: '1rem' }}>
+            <h2>Create New User</h2>
+          </div>
+          <span className="close" onClick={onClose}>
+            &times;
+          </span>
+        </div>
         <form onSubmit={handleSubmit}>
-          <div>
-            <label>Name:</label>
-            <input type="text" value={name} onChange={(e) => setName(e.target.value)} required />
+          <div className="input-box">
+            <input
+              type="text"
+              placeholder="Name"
+              value={name}
+              onChange={(e) => {
+                setName(e.target.value);
+              }}
+              required
+            />
           </div>
-          <div>
-            <label>Email:</label>
-            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+          <div className="input-box">
+            <input
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
+              required
+            />
           </div>
-          <div>
-            <label>Subscription Date:</label>
-            <input type="date" value={subsDate} onChange={(e) => setSubsDate(e.target.value)} required />
+          <div className="input-box">
+            <input
+              type="date"
+              placeholder="Subs Date"
+              value={subsDate}
+              onChange={(e) => {
+                setSubsDate(e.target.value);
+              }}
+              required
+            />
           </div>
-          <div>
-            <label>Description:</label>
-            <textarea value={description} onChange={(e) => setDescription(e.target.value)} />
+          <div className="input-box">
+            <textarea
+              value={description}
+              placeholder="Description"
+              onChange={(e) => {
+                setDescription(e.target.value);
+              }}
+            />
           </div>
           <button type="submit">Create</button>
         </form>

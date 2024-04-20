@@ -8,11 +8,10 @@ export const Dashboard = ({ onLogout }) => {
   };
 
   const [emails, setEmails] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false  );
 
   const handleCreateUser = (userData) => {
-    // Implement logic to create a new user with userData
-    console.log('New user data:', userData);
+    setEmails([...emails, userData.email]);
   };
 
   useEffect(() => {
@@ -22,8 +21,8 @@ export const Dashboard = ({ onLogout }) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        const emails = data.data.map((data) => data.email);
-        setEmails(emails);
+        const emailsData = data.data.map((data) => data.email);
+        setEmails(emailsData);
       })
       .catch((error) => {
         console.error('Error fetching data:', error);

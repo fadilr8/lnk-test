@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt');
 const dotenv = require('dotenv').config();
 const MongoDBStore = require('connect-mongodb-session')(session);
 const nodemailer = require('nodemailer');
+const cors = require('cors');
 
 const { requests, validator } = require('./validator');
 
@@ -258,6 +259,7 @@ app.use(
   })
 );
 
+app.use(cors({ origin: true, credentials: true }));
 app.use(express.json());
 app.use('/api', router);
 

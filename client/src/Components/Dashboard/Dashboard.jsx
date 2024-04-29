@@ -4,11 +4,19 @@ import CreateModal from './CreateModal';
 
 export const Dashboard = ({ onLogout }) => {
   const handleLogout = () => {
+    fetch('http://localhost:3001/api/logout', {
+      method: 'POST',
+      credentials: 'include',
+    })
+      .then((response) => response.json())
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      });
     onLogout();
   };
 
   const [emails, setEmails] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false  );
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleCreateUser = (userData) => {
     setEmails([...emails, userData.email]);

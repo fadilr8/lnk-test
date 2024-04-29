@@ -49,7 +49,7 @@ router.post('/login', async (req, res) => {
     const user = await userCollection.findOne({ email });
 
     if (!user || !bcrypt.compareSync(password, user.password)) {
-      return res.status(404).json({
+      return res.status(400).json({
         status: false,
         message: 'invalid email or password',
       });

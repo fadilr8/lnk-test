@@ -55,9 +55,6 @@ router.post('/login', async (req, res) => {
       });
     }
 
-    const sessionsCollection = db.collection('sessions');
-    await sessionsCollection.insertOne({ user_id: 1, is_valid: true });
-
     await logActivity('login');
 
     req.session.userId = user._id;
